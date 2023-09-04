@@ -136,3 +136,6 @@ def using_config(name, value) :
         yield
     finally :
         setattr(Config, name, old_value)
+
+def no_grad() :
+    return using_config('enable_backdrop', 'False')
