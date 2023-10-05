@@ -225,7 +225,7 @@ def div(x0, x1) :
 
 def rdiv(x0, x1) :
     x1 = as_array(x1)
-    return Div()(x0, x1)
+    return Div()(x1, x0)
 
 def pow(x, c) :
     return Pow(c)(x)
@@ -254,23 +254,23 @@ def no_grad() :
 
 def setup_variable() :
     Variable.__add__ = add
-    Variable.__radd__ = add
+    Variable.__radd__ = add #
     Variable.__mul__ = mul
-    Variable.__rmul__ = mul
+    Variable.__rmul__ = mul #
     Variable.__neg__ = neg
     Variable.__sub__ = sub
-    Variable.__rsub__ = sub
+    Variable.__rsub__ = rsub
     Variable.__truediv__ = div
-    Variable.__rtruediv__ = div
+    Variable.__rtruediv__ = rdiv
     Variable.__pow__ = pow
-    
+
 Variable.__add__ = add
-Variable.__radd__ = add
+Variable.__radd__ = add #
 Variable.__mul__ = mul
-Variable.__rmul__ = mul
+Variable.__rmul__ = mul #
 Variable.__neg__ = neg
 Variable.__sub__ = sub
-Variable.__rsub__ = sub
+Variable.__rsub__ = rsub
 Variable.__truediv__ = div
-Variable.__rtruediv__ = div
+Variable.__rtruediv__ = rdiv
 Variable.__pow__ = pow
