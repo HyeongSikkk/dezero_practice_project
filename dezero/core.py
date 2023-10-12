@@ -19,9 +19,8 @@ class Variable :
         self.creator = func
         self.generation = func.generation + 1
     
-    def backward(self, retain_grad = False) :
+    def backward(self, retain_grad = False, create_graph = False) :
         if self.grad is None :
-            #self.grad = np.ones_like(self.data)
             self.grad = Variable(np.ones_like(self.data))
             
         funcs = []
@@ -35,6 +34,7 @@ class Variable :
         add_func(self.creator)
         while funcs :
             f = funcs.pop()
+            # 역전파 계산(메인 처리)
             gys = [output().grad for output in f.outputs]
             
             with using_config('enable_backdrop', create_graph) :
@@ -95,6 +95,7 @@ class Function :
         
         if Config.enable_backdrop :            
             self.generation = max([x.generation for x in inputs])
+            # 연결을 만듦
             for output in outputs :
                 output.set_creator(self) # 출력 변수에 창조자 설정
             self.inputs = inputs # 입력 변수 보관
@@ -159,6 +160,7 @@ class Sub(Function) :
         return y
     
     def backward(self, gy) :
+        # gy가 Variable 객체일 것
         return gy, -gy
 
 class Div(Function) :
@@ -167,7 +169,7 @@ class Div(Function) :
         return y
     
     def backward(self, gy) :
-        x0, x1 = self.inputs[0].data, self.inputs[1].data
+        x0, x1 = self.inputs[0], self.inputs[1]
         gx0 = gy / x1
         gx1 = gy * (-x0 / x1 ** 2)
         return gx0, gx1
@@ -181,7 +183,7 @@ class Pow(Function) :
         return y
     
     def backward(self, gy) :
-        x = self.inputs[0].data
+        x = self.inputs[0]
         c = self.c
         gx = c * x ** (c - 1) * gy
         return gx
