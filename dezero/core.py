@@ -227,10 +227,6 @@ def square(x) :
     f = Square()
     return f(x)
 
-def exp(x) :
-    f = Exp()
-    return f(x)
-
 def add(x0, x1) :
     x1 = as_array(x1)
     return Add()(x0, x1)
