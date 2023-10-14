@@ -105,6 +105,9 @@ class Variable :
         p = str(self.data).replace('\n', '\n' + ' ' * 9)
         return "variable(" + p + ")"
 
+class Parameter(Variable) :
+    pass
+
 
 class Function :
     def __call__(self, *inputs) :
@@ -141,15 +144,6 @@ class Square(Function) :
     def backward(self, gy) :
         x = self.inputs[0].data
         gx = 2 * x * gy
-        return gx
-
-class Exp(Function) :
-    def forward(self, x) :
-        return np.exp(x)
-    
-    def backward(self, gy) :
-        x = self.input.data
-        gx = np.exp(x) * gy
         return gx
 
 class Add(Function) :
