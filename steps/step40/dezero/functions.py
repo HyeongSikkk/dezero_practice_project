@@ -144,4 +144,3 @@ def broadcast_to(x, shape) :
     if x.shape == shape :
         return as_varaible(x)
     return BroadcastTo(shape)(x)
-        
