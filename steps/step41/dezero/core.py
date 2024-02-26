@@ -277,6 +277,6 @@ def setup_variable() :
     Variable.__rsub__ = rsub
     Variable.__mul__ = mul
     Variable.__rmul__ = mul
-    Variable.__div__ = div
-    Variable.__rdiv__ = rdiv
+    Variable.__truediv__ = div
+    Variable.__rtruediv__ = rdiv
     Variable.__pow__ = pow
