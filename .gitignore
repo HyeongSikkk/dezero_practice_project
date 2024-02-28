@@ -2,3 +2,4 @@
 update.py
 *.png
 *.npz
+steps/*/__pycache__/
